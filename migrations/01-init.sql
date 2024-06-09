@@ -5,7 +5,7 @@ CREATE TABLE park (
 
     name varchar(255) not null,
     description varchar(255) not null,
-    polygon path null,
+    area polygon null,
 
     primary key (id)
 );    
@@ -17,8 +17,7 @@ CREATE TABLE route (
     name varchar(255) not null,
     description varchar(255) not null,
     how_to_get varchar(255) not null,
-    what_to_tack varchar(255) not null,
-    what_to_tack varchar(255) not null,
+    what_to_take varchar(255) not null,
     in_emergency varchar(255) not null,
     recommendations varchar(255) not null,
 
@@ -31,13 +30,6 @@ CREATE TABLE route (
     index (park_id)
 );
 
-CREATE TABLE route_to_place ( 
-    route_id int not null,
-    place_id int not null,
-
-    primary key (route_id, place_id)
-);
-
 CREATE TABLE route_to_month ( 
     route_id int not null,
     month int not null,
@@ -48,7 +40,7 @@ CREATE TABLE route_to_month (
     primary key (route_id, month)
 );
 
-CREATE TABLE reviews ( 
+CREATE TABLE review ( 
     id int not null auto_increment,
     route_id int not null,
     user_id int not null,
@@ -62,8 +54,11 @@ CREATE TABLE reviews (
 CREATE TABLE place ( 
     id int not null auto_increment, 
 
+    route_id int not null,
     name varchar(255) not null,
     description varchar(255) not null,
+    icon varchar(255) null,
+    location varchar(255) null,
 
     primary key (id)
 );
@@ -124,7 +119,7 @@ CREATE TABLE request (
     index (user_id)
 );    
 
-CREATE TABLE messages (
+CREATE TABLE message (
     id int not null auto_increment,
     status enum('pending', 'delivered', 'declined') not null default 'pending',
 
