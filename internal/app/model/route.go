@@ -1,6 +1,7 @@
 package model
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/uptrace/bun"
@@ -23,6 +24,7 @@ type Route struct {
 	Duration        int
 	Height          int
 	Difficulty      string
+	Load            json.RawMessage `bun:"type:json"`
 }
 
 type RouteList struct {

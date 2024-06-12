@@ -1,6 +1,7 @@
 package model
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/uptrace/bun"
@@ -12,7 +13,7 @@ type Park struct {
 	ID          int `bun:",pk,type:int,autoincrement"`
 	Name        string
 	Description string
-	Area        []string
+	Area        json.RawMessage `bun:"type:json"`
 }
 
 type ParkList struct {

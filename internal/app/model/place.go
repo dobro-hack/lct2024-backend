@@ -1,6 +1,7 @@
 package model
 
 import (
+	"encoding/json"
 	"net/http"
 
 	"github.com/uptrace/bun"
@@ -14,7 +15,7 @@ type Place struct {
 	Name        string
 	Description string
 	Icon        string
-	Location    string
+	Location    json.RawMessage `bun:"type:json"`
 }
 
 type PlaceList struct {

@@ -5,7 +5,7 @@ CREATE TABLE park (
 
     name varchar(255) not null,
     description varchar(255) not null,
-    area polygon null,
+    area json null,
 
     primary key (id)
 );    
@@ -25,6 +25,7 @@ CREATE TABLE route (
     duration int null,
     height int null,
     difficulty enum('easy', 'medium', 'hard') not null,
+    load json null,
 
     primary key (id),
     index (park_id)
@@ -58,7 +59,7 @@ CREATE TABLE place (
     name varchar(255) not null,
     description varchar(255) not null,
     icon varchar(255) null,
-    location varchar(255) null,
+    location json null,
 
     primary key (id)
 );
@@ -128,7 +129,7 @@ CREATE TABLE message (
     type enum('trash', 'fire', 'damage', 'other') not null,
     title varchar(255) not null default '',
     message varchar(4096) not null default '',
-
+    file varchar(255) not null default '',
 
     primary key (id),
     index (user_id)
