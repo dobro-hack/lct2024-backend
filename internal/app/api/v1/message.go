@@ -14,6 +14,29 @@ import (
 	"github.com/go-chi/render"
 )
 
+// GetMessageList godoc
+// @Summary Get Message List
+// @Tags Message
+// @Description Message List
+// @Produce  json
+// @Success 200 {object} model.MessageList
+// @Failure 404 {object} api.ErrResponse
+// @Failure 500 {object} api.ErrResponse
+// @Router /message [get]
+func (a *v1handler) GetMessageList(w http.ResponseWriter, r *http.Request) {
+	list, cnt, err := a.api.Storage.ListMessage(r.Context())
+	if err != nil && err != sql.ErrNoRows {
+		render.Render(w, r, a.api.ErrInternalServerError(r, err))
+		return
+	}
+	res := model.MessageList{
+		Items:           list,
+		TotalItemsCount: cnt,
+	}
+	render.Status(r, http.StatusOK)
+	render.Render(w, r, &res)
+}
+
 // SaveMessage godoc
 // @Summary Save Message
 // @Tags Message

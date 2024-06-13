@@ -47,3 +47,13 @@ func (res *SaveMessageResponse) Render(w http.ResponseWriter, r *http.Request) e
 	// Pre-processing before a response is marshalled and sent across the wire
 	return nil
 }
+
+type MessageList struct {
+	Items           []Message
+	TotalItemsCount int
+}
+
+func (res *MessageList) Render(w http.ResponseWriter, r *http.Request) error {
+	// Pre-processing before a response is marshalled and sent across the wire
+	return nil
+}
