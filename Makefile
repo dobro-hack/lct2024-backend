@@ -24,7 +24,7 @@ scp:
 	/usr/bin/scp ./dist/api 91:/home/bitrix/www/hack2024/
 
 kill:
-	ssh -f -n 91 'screen -S api -X quit && pkill api'
+	ssh -f -n 91 'screen -S lct2024 -X quit && pkill api && rm -f ./api'
 
 exec:
 	$(eval REVISION = $(shell git log -1 --pretty=format:"%H"))

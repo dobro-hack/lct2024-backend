@@ -9,5 +9,7 @@ func (a *v1handler) ConfigureRouter() {
 	a.api.Router.
 		Route("/api/v1", func(r chi.Router) {
 			r.Get("/route", a.GetRouteList)
+			r.Post("/request", a.SaveRequest)
+			r.Post("/message", a.SaveMessage)
 		})
 }

@@ -126,12 +126,36 @@ CREATE TABLE message (
 
     user_id int not null,
     sent_at datetime not null,
-    type enum('trash', 'fire', 'damage', 'other') not null,
-    title varchar(255) not null default '',
+    type enum('waste','waterPollution','other','air','animals','reserve','treatment','waterAccess') not null,
     message varchar(4096) not null default '',
-    file varchar(255) not null default '',
+    file_url varchar(255) not null default '',
+    location json null,
+    phone varchar(255),
 
     primary key (id),
     index (user_id)
 );    
 
+-- @JsonValue('waste') 
+-- wasteDisposal('Незаконная утилизация отходов'), 
+
+-- @JsonValue('waterPollution') 
+-- waterPollution('Загрязнение воды'), 
+
+-- @JsonValue('other') 
+-- other('Иное'), 
+
+-- @JsonValue('air') 
+-- air('Загрязнение воздуха'), 
+
+-- @JsonValue('animals') 
+-- animals('Нарушение законодательства о животном мире'), 
+
+-- @JsonValue('reserve') 
+-- reserve('Нарушение в заповедной зоне'), 
+
+-- @JsonValue('treatment') 
+-- treatment('Нарушение при эксплуатации очистных сооружений'), 
+
+-- @JsonValue('waterAccess') 
+-- waterAccess('Незаконное ограничение доступа к воде');
