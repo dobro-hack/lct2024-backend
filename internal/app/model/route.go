@@ -25,6 +25,8 @@ type Route struct {
 	Height          int
 	Difficulty      string
 	Load            json.RawMessage `bun:"type:json"`
+	MaxLoad         json.RawMessage `bun:"type:json"`
+	Photo           json.RawMessage `bun:"type:json"`
 }
 
 type RouteList struct {

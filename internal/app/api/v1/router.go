@@ -11,6 +11,9 @@ func (a *v1handler) ConfigureRouter() {
 			r.Get("/route", a.GetRouteList)
 			r.Get("/message", a.GetMessageList)
 			r.Post("/request", a.SaveRequest)
+			r.Post("/org", a.SaveOrg)
+			r.Post("/person", a.SavePerson)
 			r.Post("/message", a.SaveMessage)
+			r.Post("/user", a.SaveUser)
 		})
 }

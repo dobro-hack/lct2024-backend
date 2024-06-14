@@ -39,11 +39,11 @@ func (a *SaveMessageRequest) Bind(r *http.Request) error {
 	return nil
 }
 
-type SaveMessageResponse struct {
+type StatusResponse struct {
 	Status string
 }
 
-func (res *SaveMessageResponse) Render(w http.ResponseWriter, r *http.Request) error {
+func (res *StatusResponse) Render(w http.ResponseWriter, r *http.Request) error {
 	// Pre-processing before a response is marshalled and sent across the wire
 	return nil
 }

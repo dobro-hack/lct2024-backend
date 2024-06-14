@@ -20,12 +20,14 @@ CREATE TABLE route (
     what_to_take varchar(255) not null,
     in_emergency varchar(255) not null,
     recommendations varchar(255) not null,
+    photo json null,
 
     length int null,
     duration int null,
     height int null,
     difficulty enum('easy', 'medium', 'hard') not null,
     load json null,
+    max_load json null,
 
     primary key (id),
     index (park_id)
@@ -64,30 +66,28 @@ CREATE TABLE place (
     primary key (id)
 );
 
-CREATE TABLE user (
-    id int not null auto_increment,
-    status enum('active','blocked') not null default 'active',
+CREATE TABLE device (
+    user_id int not null,
     device_id varchar(255) not null default '',
 
-    flags set('gosuslugi_connected') default '',
-
-    primary key (id)
+    primary key (device_id)
 );
 
 CREATE TABLE person ( 
     id int not null auto_increment,
-    request_id int not null,
+    request_id varchar(255) not null,
 
     first_name varchar(255) not null default "",
     middle_name varchar(255) not null default "",
     last_name varchar(255) not null default "",
     sitizen varchar(255) not null default "",
     region varchar(255) not null default "",
-    gender enum('man', 'woman') not null,
+    gender enum('man', 'woman') not null default 'man',
     passport varchar(255) not null default "",
     birthday date not null,
     email varchar(255) not null default "",
-    phone int null,
+    phone varchar(255) not null default "",
+    is_leader tinyint(1) not null default false,
 
 
     primary key (id),
@@ -96,7 +96,7 @@ CREATE TABLE person (
 
 CREATE TABLE org ( 
     id int not null auto_increment,
-    request_id int not null,
+    request_id varchar(255) not null,
 
     name varchar(255) not null default "",
     inn varchar(255) not null default "",
@@ -106,17 +106,17 @@ CREATE TABLE org (
     phone int null,
 
     primary key (id),
-    index (request_id)
+    unique (request_id)
 );
 
 CREATE TABLE request (
-    id int not null auto_increment,
-    status enum('pending', 'approved', 'declined') not null default 'pending',
-
+    request_id varchar(255) not null default "",
     user_id int not null,
     date_start date not null,
+    quantity int not null,
+    route_id int not null,
 
-    primary key (id),
+    primary key (request_id),
     index (user_id)
 );    
 

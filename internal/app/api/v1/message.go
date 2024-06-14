@@ -123,7 +123,7 @@ func (a *v1handler) SaveMessage(w http.ResponseWriter, r *http.Request) {
 		render.Render(w, r, a.api.ErrInternalServerError(r, err))
 		return
 	}
-	res := model.SaveMessageResponse{
+	res := model.StatusResponse{
 		Status: http.StatusText(http.StatusOK),
 	}
 	render.Status(r, http.StatusOK)
