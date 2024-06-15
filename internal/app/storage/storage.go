@@ -2,10 +2,15 @@ package storage
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"database/sql"
 	"fmt"
+	"log"
+	"os"
 
 	"github.com/dobro-hack/lct2024-backend/internal/app/config"
+	"github.com/go-sql-driver/mysql"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/mysqldialect"
@@ -19,8 +24,31 @@ type Database struct {
 	DB  *sql.DB
 }
 
+func createTLSConf() tls.Config {
+
+	rootCertPool := x509.NewCertPool()
+	pem, err := os.ReadFile("root.crt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	if ok := rootCertPool.AppendCertsFromPEM(pem); !ok {
+		log.Fatal("Failed to append PEM.")
+	}
+
+	return tls.Config{
+		RootCAs:            rootCertPool,
+		InsecureSkipVerify: true, // needed for self signed certs
+	}
+}
+
 // New returns new Database with specified dsn, handler and options.
 func Open(ctx context.Context, cfg config.Config) (*Database, error) {
+	tlsConf := createTLSConf()
+	err := mysql.RegisterTLSConfig("custom", &tlsConf)
+	if err != nil {
+		return nil, err
+	}
+
 	dbConn, err := sql.Open("mysql", cfg.DB.DSN)
 	if err != nil {
 		return nil, err
