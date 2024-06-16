@@ -2,7 +2,9 @@ package v1
 
 import (
 	"database/sql"
+	"encoding/json"
 	"net/http"
+	"time"
 
 	"github.com/dobro-hack/lct2024-backend/internal/app/model"
 	"github.com/go-chi/render"
@@ -47,11 +49,50 @@ func (a *v1handler) SaveRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err := a.api.Storage.SaveRequest(r.Context(), req)
+	route, err := a.api.Storage.GetRoute(r.Context(), req.RouteID)
+	if err != nil {
+		render.Render(w, r, a.api.ErrInternalServerError(r, err))
+		return
+	}
+
+	slice := make([]int, 365)
+	err = json.Unmarshal(route.Load, &slice)
+	if err != nil {
+		render.Render(w, r, a.api.ErrInternalServerError(r, err))
+		return
+	}
+	if len(slice) == 0 {
+		slice = make([]int, 365)
+	}
+
+	date, err := time.Parse("2006-01-02", req.DateStart)
+	if err != nil {
+		render.Render(w, r, a.api.ErrInternalServerError(r, err))
+		return
+	}
+
+	d := date.YearDay()
+	slice[d] += req.Quantity
+
+	b, err := json.Marshal(slice)
+	if err != nil {
+		render.Render(w, r, a.api.ErrInternalServerError(r, err))
+		return
+	}
+	route.Load = b
+
+	err = a.api.Storage.SaveRoute(r.Context(), route)
+	if err != nil {
+		render.Render(w, r, a.api.ErrInternalServerError(r, err))
+		return
+	}
+
+	err = a.api.Storage.SaveRequest(r.Context(), req)
 	if err != nil && err != sql.ErrNoRows {
 		render.Render(w, r, a.api.ErrInternalServerError(r, err))
 		return
 	}
+
 	res := model.StatusResponse{
 		Status: http.StatusText(http.StatusOK),
 	}

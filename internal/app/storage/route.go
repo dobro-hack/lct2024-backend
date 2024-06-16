@@ -19,3 +19,25 @@ func (db *Database) ListRoute(ctx context.Context) ([]model.Route, int, error) {
 
 	return i, co, nil
 }
+
+func (db *Database) GetRoute(ctx context.Context, routeId int) (model.Route, error) {
+	i := model.Route{}
+
+	err := db.Bun.NewSelect().Model(&i).
+		Where("id = ?", routeId).
+		Scan(ctx)
+	if err != nil {
+		return i, err
+	}
+
+	return i, nil
+}
+
+func (db *Database) SaveRoute(ctx context.Context, route model.Route) error {
+	_, err := db.Bun.NewUpdate().Model(&route).Column("load").WherePK().Exec(ctx)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -15,12 +15,13 @@ CREATE TABLE route (
     
     park_id int null,
     name varchar(255) not null,
-    description varchar(255) not null,
-    how_to_get varchar(255) not null,
-    what_to_take varchar(255) not null,
-    in_emergency varchar(255) not null,
-    recommendations varchar(255) not null,
+    description varchar(2048) null,
+    how_to_get varchar(1024) null,
+    what_to_take varchar(1024) null,
+    in_emergency varchar(1024) null,
+    recommendations varchar(1024) null,
     photo json null,
+    gpx_data longtext null,
 
     length int null,
     duration int null,
@@ -59,6 +60,7 @@ CREATE TABLE place (
     area_per_visitor float not null, -- площадь, необходимая для одного посетителя в кв. метрах
     return_coefficient float not null, -- коэффициент возвращения
     days int not null, -- количество дней в рассматриваемую единицу времени
+    used_in_calculations tinyint(1) not null default 1,
 
     primary key (id),
     foreign key (route_id) references route (id)
