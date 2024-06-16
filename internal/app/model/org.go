@@ -8,7 +8,7 @@ import (
 )
 
 type Org struct {
-	bun.BaseModel `bun:"table:org,alias:o"`
+	bun.BaseModel `bun:"table:org,alias:o" swaggerignore:"true"`
 
 	ID        int    `bun:",pk,type:int,autoincrement"`
 	RequestID string `json:"request_id"`

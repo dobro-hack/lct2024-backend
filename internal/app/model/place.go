@@ -15,7 +15,7 @@ type Place struct {
 	Name        string
 	Description string
 	Icon        string
-	Location    json.RawMessage `bun:"type:json"`
+	Location    json.RawMessage `bun:"type:json" swaggerignore:"true"`
 }
 
 type PlaceList struct {

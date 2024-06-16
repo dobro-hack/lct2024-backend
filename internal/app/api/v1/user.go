@@ -12,7 +12,7 @@ import (
 // @Tags User
 // @Description Save User
 // @Produce  json
-// @Success 200 {object} model.User
+// @Success 200 {object} model.StatusResponse
 // @Failure 404 {object} api.ErrResponse
 // @Failure 500 {object} api.ErrResponse
 // @Router /user [post]

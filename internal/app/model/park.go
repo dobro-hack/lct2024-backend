@@ -8,12 +8,12 @@ import (
 )
 
 type Park struct {
-	bun.BaseModel `bun:"table:park,alias:p"`
+	bun.BaseModel `bun:"table:park,alias:p" swaggerignore:"true"`
 
 	ID          int `bun:",pk,type:int,autoincrement"`
 	Name        string
 	Description string
-	Area        json.RawMessage `bun:"type:json"`
+	Area        json.RawMessage `bun:"type:json" swaggerignore:"true"`
 }
 
 type ParkList struct {

@@ -24,9 +24,10 @@ type Route struct {
 	Duration        int
 	Height          int
 	Difficulty      string
-	Load            json.RawMessage `bun:"type:json"`
-	MaxLoad         json.RawMessage `bun:"type:json"`
-	Photo           json.RawMessage `bun:"type:json"`
+	Load            json.RawMessage `bun:"type:json" swaggerignore:"true"`
+	MaxLoad         json.RawMessage `bun:"type:json" swaggerignore:"true"`
+	Photo           json.RawMessage `bun:"type:json" swaggerignore:"true"`
+	GpxData         string
 }
 
 type RouteList struct {

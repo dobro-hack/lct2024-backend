@@ -1,0 +1,363 @@
+basePath: /
+definitions:
+  api.ErrResponse:
+    properties:
+      code:
+        description: application-specific error code
+        type: integer
+      error:
+        description: application-level error message, for debugging
+        type: string
+      status:
+        description: user-level status message
+        type: string
+    type: object
+  model.Message:
+    properties:
+      fileUrl:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      phone:
+        type: string
+      sentAt:
+        type: string
+      status:
+        type: string
+      type:
+        type: string
+      userID:
+        type: integer
+    type: object
+  model.MessageList:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/model.Message'
+        type: array
+      totalItemsCount:
+        type: integer
+    type: object
+  model.Org:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      inn:
+        type: string
+      kpp:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      request_id:
+        type: string
+    type: object
+  model.Park:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  model.Person:
+    properties:
+      birthday:
+        type: string
+      email:
+        type: string
+      first_name:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      is_leader:
+        type: boolean
+      last_name:
+        type: string
+      middle_name:
+        type: string
+      passport:
+        type: string
+      phone:
+        type: string
+      region:
+        type: string
+      request_id:
+        type: string
+      sitizen:
+        type: string
+    type: object
+  model.Place:
+    properties:
+      description:
+        type: string
+      icon:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      routeID:
+        type: integer
+    type: object
+  model.Request:
+    properties:
+      date_start:
+        type: string
+      org:
+        $ref: '#/definitions/model.Org'
+      person:
+        items:
+          $ref: '#/definitions/model.Person'
+        type: array
+      quantity:
+        type: integer
+      request_id:
+        type: string
+      route_id:
+        type: integer
+      user_id:
+        type: integer
+    type: object
+  model.RequestList:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/model.Request'
+        type: array
+      totalItemsCount:
+        type: integer
+    type: object
+  model.Route:
+    properties:
+      description:
+        type: string
+      difficulty:
+        type: string
+      duration:
+        type: integer
+      gpxData:
+        type: string
+      height:
+        type: integer
+      howToGet:
+        type: string
+      id:
+        type: integer
+      inEmergency:
+        type: string
+      length:
+        type: integer
+      name:
+        type: string
+      park:
+        $ref: '#/definitions/model.Park'
+      parkID:
+        type: integer
+      places:
+        items:
+          $ref: '#/definitions/model.Place'
+        type: array
+      recommendations:
+        type: string
+      whatToTake:
+        type: string
+    type: object
+  model.RouteList:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/model.Route'
+        type: array
+      totalItemsCount:
+        type: integer
+    type: object
+  model.StatusResponse:
+    properties:
+      status:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API Server for app
+  title: lct2024 API
+  version: "1.0"
+paths:
+  /message:
+    get:
+      description: Message List
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.MessageList'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+      summary: Get Message List
+      tags:
+      - Message
+    post:
+      description: Save Message
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.StatusResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+      summary: Save Message
+      tags:
+      - Message
+  /org:
+    post:
+      description: Save Org
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.StatusResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+      summary: Save Org
+      tags:
+      - Org
+  /person:
+    post:
+      description: Save Person
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.StatusResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+      summary: Save Person
+      tags:
+      - Person
+  /request:
+    get:
+      description: Request List
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.RequestList'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+      summary: Get Request List
+      tags:
+      - Request
+    post:
+      description: Save Request
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.StatusResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+      summary: Save Request
+      tags:
+      - Request
+  /route:
+    get:
+      description: Route in park
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.RouteList'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+      summary: Get list of Route
+      tags:
+      - Route
+  /user:
+    post:
+      description: Save User
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.StatusResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/api.ErrResponse'
+      summary: Save User
+      tags:
+      - User
+swagger: "2.0"

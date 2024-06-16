@@ -9,14 +9,14 @@ import (
 )
 
 type Message struct {
-	bun.BaseModel `bun:"table:message,alias:m"`
+	bun.BaseModel `bun:"table:message,alias:m" swaggerignore:"true"`
 
 	ID       int `bun:",pk,type:int,autoincrement"`
 	UserID   int
 	SentAt   time.Time
 	Type     string
 	Message  string
-	Location json.RawMessage `bun:"type:json"`
+	Location json.RawMessage `bun:"type:json" swaggerignore:"true"`
 	Status   string
 	FileUrl  string
 	Phone    string

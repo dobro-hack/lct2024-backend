@@ -8,7 +8,7 @@ import (
 )
 
 type Device struct {
-	bun.BaseModel `bun:"table:device,alias:d"`
+	bun.BaseModel `bun:"table:device,alias:d" swaggerignore:"true"`
 
 	DeviceID string `bun:",pk,type:string"`
 	UserID   int

@@ -8,7 +8,7 @@ import (
 )
 
 type Request struct {
-	bun.BaseModel `bun:"table:request,alias:r"`
+	bun.BaseModel `bun:"table:request,alias:r" swaggerignore:"true"`
 
 	RequestID string `bun:",pk,type:string" json:"request_id"`
 	UserID    int    `json:"user_id"`
