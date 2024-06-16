@@ -18,7 +18,7 @@ func (db *Database) SaveRequest(ctx context.Context, req model.Request) error {
 func (db *Database) ListRequest(ctx context.Context) ([]model.Request, int, error) {
 	i := make([]model.Request, 0)
 
-	co, err := db.Bun.NewSelect().Model(&i).
+	co, err := db.Bun.NewSelect().Model(&i).Relation("Person").Relation("Org").
 		ScanAndCount(ctx)
 	if err != nil {
 		return nil, 0, err
