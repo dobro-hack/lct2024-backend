@@ -28,19 +28,13 @@ CREATE TABLE route (
     difficulty enum('easy', 'medium', 'hard') not null,
     load json null,
     max_load json null,
+    group_distance float not null,
+    average_time float not null,
+    group_size int not null,
+    days_on_route int not null,
 
     primary key (id),
     index (park_id)
-);
-
-CREATE TABLE route_to_month ( 
-    route_id int not null,
-    month int not null,
-    workload_cur int not null,
-    workload_avg int not null,
-    capacity int not null,
-
-    primary key (route_id, month)
 );
 
 CREATE TABLE review ( 
@@ -54,16 +48,20 @@ CREATE TABLE review (
     index (route_id)
 );
 
-CREATE TABLE place ( 
-    id int not null auto_increment, 
-
+CREATE TABLE place (
+    id int not null auto_increment,
     route_id int not null,
     name varchar(255) not null,
     description varchar(255) not null,
     icon varchar(255) null,
     location json null,
+    area float not null, -- площадь туристского объекта в кв. метрах
+    area_per_visitor float not null, -- площадь, необходимая для одного посетителя в кв. метрах
+    return_coefficient float not null, -- коэффициент возвращения
+    days int not null, -- количество дней в рассматриваемую единицу времени
 
-    primary key (id)
+    primary key (id),
+    foreign key (route_id) references route (id)
 );
 
 CREATE TABLE device (
