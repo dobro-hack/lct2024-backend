@@ -16,5 +16,6 @@ func (a *v1handler) ConfigureRouter() {
 			r.Post("/person", a.SavePerson)
 			r.Post("/message", a.SaveMessage)
 			r.Post("/user", a.SaveUser)
+			r.Post("/push", a.Push)
 		})
 }

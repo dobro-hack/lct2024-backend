@@ -9,7 +9,8 @@ import (
 )
 
 type Config struct {
-	DB DBConfig
+	DB           DBConfig
+	FireBaseFile string `envconfig:"FIREBASE_FILE" default:"eco-hack-22325-firebase-adminsdk-f31nz-191274ce5f.json"`
 }
 
 type DBConfig struct {

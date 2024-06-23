@@ -15,6 +15,7 @@ type Request struct {
 	Quantity  int
 	RouteID   int    `json:"route_id"`
 	DateStart string `json:"date_start"`
+	Status    string
 
 	Person []Person `bun:"rel:has-many,join:request_id=request_id"`
 	Org    *Org     `bun:"rel:has-one,join:request_id=request_id"`
